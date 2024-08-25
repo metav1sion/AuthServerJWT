@@ -8,7 +8,7 @@ public interface IGenericService<TEntity,TDto> where TEntity : class where TDto 
     Task<ResponseDto<TDto>> GetByIdAsync(int id);
     Task<ResponseDto<IEnumerable<TDto>>> GetAllAsync();
     Task<ResponseDto<IEnumerable<TDto>>> Where(Expression<Func<TEntity, bool>> predicate); //TEntity alan ve bool dönen bir metot girilecek içine.
-    Task<ResponseDto<TDto>> AddAsync(TEntity entity);
-    Task<ResponseDto<NoDataDTO>> Remove(TEntity entity);
-    Task<ResponseDto<NoDataDTO>> Update(TEntity entity);
+    Task<ResponseDto<TDto>> AddAsync(TDto dto);
+    Task<ResponseDto<NoDataDTO>> Remove(int id);
+    Task<ResponseDto<NoDataDTO>> Update(TDto dto, int id);
 }
