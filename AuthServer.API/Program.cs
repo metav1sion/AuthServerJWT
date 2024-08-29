@@ -1,3 +1,5 @@
+using AuthServer.SharedLibrary.Configurations;
+
 namespace AuthServer.API
 {
     public class Program
@@ -5,6 +7,9 @@ namespace AuthServer.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var Configuration = builder.Configuration;
+
+            builder.Services.Configure<CustomTokenOption>(Configuration.GetSection("TokenOption"));
 
             // Add services to the container.
 
