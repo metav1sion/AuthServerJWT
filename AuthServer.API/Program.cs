@@ -1,3 +1,4 @@
+using AuthServer.Core.Configuration;
 using AuthServer.SharedLibrary.Configurations;
 
 namespace AuthServer.API
@@ -10,6 +11,7 @@ namespace AuthServer.API
             var Configuration = builder.Configuration;
 
             builder.Services.Configure<CustomTokenOption>(Configuration.GetSection("TokenOption"));
+            builder.Services.Configure<List<Client>>(Configuration.GetSection("Clients"));
 
             // Add services to the container.
 

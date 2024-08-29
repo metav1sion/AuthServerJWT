@@ -17,7 +17,6 @@ public class TokenService : ITokenService
     private readonly UserManager<UserApp> _userManager;
     private readonly CustomTokenOption _customTokenOption;
 
-
     public TokenService(UserManager<UserApp> userManager, IOptions<CustomTokenOption> customTokenOption)
     {
         _userManager = userManager;
@@ -87,7 +86,7 @@ public class TokenService : ITokenService
             AccessToken = token,
             AccessTokenExpiration = accessTokenExpiration,
             RefreshToken = CreateRefreshToken(),
-            RefreshTokenExpiration = refreshTokenExpiration.ToString(),
+            RefreshTokenExpiration = refreshTokenExpiration,
         };
         return tokenDto;
     }
