@@ -84,10 +84,10 @@ public class AuthenticationService : IAuthenticationService
         }
 
         // Tarih kontrolü
-        if (userRefreshToken.Expiration <= DateTime.Now)
-        {
-            return ResponseDto<TokenDTO>.Failure("Refresh token has expired!", 404, true);
-        }
+        //if (userRefreshToken.Expiration <= DateTime.Now)
+        //{
+        //    return ResponseDto<TokenDTO>.Failure("Refresh token has expired!", 404, true);
+        //}
 
         var user = await _userManager.FindByIdAsync(userRefreshToken.UserId);
         if (user == null)
@@ -107,9 +107,19 @@ public class AuthenticationService : IAuthenticationService
     }
 
 
-    public Task<ResponseDto<NoDataDTO>> RevokeRefreshTokenAsync(string refreshToken)
+    public async Task<ResponseDto<NoDataDTO>> RevokeRefreshTokenAsync(string refreshToken)
     {
-        throw new NotImplementedException();
+        var userRefreshToken = await _userRefreshTokenService.Where(x => x.Code == refreshToken).SingleOrDefaultAsync();
+
+        if (userRefreshToken == null)
+        {
+            return ResponseDto<NoDataDTO>.Failure("Invalid refresh token!", 404, true);
+        }
+
+        _userRefreshTokenService.Remove(userRefreshToken);
+        await _unitOfWork.CommitAsync();
+
+        return ResponseDto<NoDataDTO>.Success(200);
     }
 
     public ResponseDto<ClientTokenDTO> CreateTokenByClient(ClientLoginDTO clientLoginDto)
